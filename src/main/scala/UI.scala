@@ -4,15 +4,16 @@ import Array._
 
 class UI extends MainFrame {
 
-  var codelsArray = ofDim[Int](2, 2)
+  var codelsArray = ofDim[Int](4, 4)
   for (i <- 0 to 1) {
-    for ( j <- 0 to 1) {
-      codelsArray(i)(j) = j+i;
+    for (j <- 0 to 1) {
+      codelsArray(i)(j) = j + i
     }
   }
-  val codels = new Codels(2, 2, codelsArray)
+
+  val program = new PietProgram(codelsArray)
+  val codels = new Codels(4, 4, program.codelsArray)
   var i = 0
-  var program = new PietProgram
 
   title = "GUI Program #1"
   val l1 = new Label("bla %d".format(i))
