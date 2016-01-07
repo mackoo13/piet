@@ -5,9 +5,9 @@ import Array._
 class UI extends MainFrame {
 
   var codelsArray = ofDim[Int](4, 4)
-  for (i <- 0 to 1) {
-    for (j <- 0 to 1) {
-      codelsArray(i)(j) = j + i
+  for (i <- 0 to 3) {
+    for (j <- 0 to 3) {
+      codelsArray(i)(j) = j + i + 1
     }
   }
 
