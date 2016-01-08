@@ -11,8 +11,8 @@ class UI extends MainFrame {
     }
   }
 
-  val program = new PietProgram(codelsArray)
-  val codels = new Codels(4, 4, program.codelsArray)
+  val navigator = new PietNavigator(codelsArray)
+  val codels = new Codels(4, 4, navigator.codelsArray)
   var i = 0
 
   title = "GUI Program #1"

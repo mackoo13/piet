@@ -16,10 +16,7 @@ class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) e
     val y0 = (d.height - height * wid)/2
     for (x <- 0 until width) {
       for (y <- 0 until height) {
-        if(codelsArray(x)(y)==1)
-          g.setColor(Color.orange)
-        else
-          g.setColor(Color.blue)
+        g.setColor(new Color(codelsArray(x)(y)*20, 99, 99))
         g.fillRect(x0 + x * wid, y0 + y * wid, wid, wid)
       }
     }
