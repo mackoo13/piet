@@ -8,7 +8,7 @@ class PietStack {
 
   def push(a:Int) = { stack.push(a) }
 
-  def pop = { stack.pop }
+  def pop = { stack.pop() }
 
   def add = { push(pop+pop) }
 
@@ -48,5 +48,7 @@ class PietStack {
       push(rolls)
     }
   }
+
+  override def toString = stack.addString(new StringBuilder(), "<br>").toString()
 
 }
