@@ -90,6 +90,7 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
 
 }
 
+
 sealed abstract class DP { val step:Point; val next:DP; val prev:DP; val name:String }
 case object DPRIGHT extends DP { val step = new Point(1, 0); val next = DPDOWN; val prev = DPUP; val name = "RIGHT" }
 case object DPDOWN extends DP { val step = new Point(0, 1); val next = DPLEFT; val prev = DPRIGHT; val name = "DOWN" }

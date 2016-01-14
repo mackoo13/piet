@@ -8,6 +8,16 @@ class PietStack {
 
   def push(a:Int) = { stack.push(a) }
 
+  def pushOnlyInt(input:String) = {
+    try {
+      push(input.toInt)
+    } catch {
+      case nfe:NumberFormatException => None
+    }
+  }
+
+  def pushOnlyChar(input:String) = { if(input.length == 1) push(input(0).toInt) }
+
   def pop = { stack.pop() }
 
   def add = { push(pop+pop) }

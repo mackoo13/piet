@@ -1,6 +1,6 @@
 import scala.Array._
 
-class PietProgram {
+class PietProgram(val ui:UI) {
 
   var codelsArray = ofDim[Int](4, 4)
   codelsArray(0) = Array(0, 1, 9, 0)
@@ -8,8 +8,13 @@ class PietProgram {
   codelsArray(2) = Array(1, 0, 0, 3)
   codelsArray(3) = Array(1, 1, 2, 5)
 
+  println(ui)
+
   val nav = new PietNavigator(codelsArray)
   val stack = new PietStack
+  val out = new PietOutput
+
+  var stopped = false
 
   def execOp(from:Int, to:Int) = {
     val hueChange = ((to/3)-(from/3)+66)%6
@@ -32,10 +37,10 @@ class PietProgram {
       case (3, 2) => None//nav.switch(stack.pop)
       case (4, 0) => None//stack.dup
       case (4, 1) => None//stack.roll
-      case (4, 2) => None //in int, TODO
-      case (5, 0) => None //in char, TODO
-      case (5, 1) => None //out int, TODO
-      case (5, 2) => None //out char, TODO
+      case (4, 2) => None//if(ui.inputField.text=="") stopped=true else stack.pushOnlyInt(ui.inputField.text)
+      case (5, 0) => None//if(ui.inputField.text=="") stopped=true else stack.pushOnlyChar(ui.inputField.text)
+      case (5, 1) => None//out.intOut(stack.pop)
+      case (5, 2) => None //out.charOut(stack.pop)
     }
 
   }
@@ -43,10 +48,12 @@ class PietProgram {
   def step() = {
     val nextCodel = nav.next()
     println(nav.currentCodel + " to " + nextCodel)
+
     execOp(nav.getColor(nav.currentCodel), nav.getColor(nextCodel))
     nav.currentCodel = nextCodel
 
-    println(stack)
+    println("STACK:" + stack)
+    println("INPUT:" + ui.inputField.text)
   }
 
 }
