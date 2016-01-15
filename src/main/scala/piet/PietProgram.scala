@@ -2,20 +2,11 @@ package piet
 
 import ui.UI
 
-import scala.Array._
-
-class PietProgram(val ui:UI) {
-
-  var codelsArray = ofDim[Int](4, 4)
-  codelsArray(0) = Array(0, 1, 9, 0)
-  codelsArray(1) = Array(0, 2, 0, 10)
-  codelsArray(2) = Array(1, 0, 0, 3)
-  codelsArray(3) = Array(1, 1, 2, 5)
+class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
 
   val nav = new PietNavigator(codelsArray)
   val stack = new PietStack
   val out = new PietOutput
-
   var stopped = false
 
   def execOp(from:Int, to:Int) = {
@@ -51,7 +42,6 @@ class PietProgram(val ui:UI) {
 
   def step() = {
     val nextCodel = nav.next()
-    println(nav.currentCodel + " to " + nextCodel)
 
     execOp(nav.getColor(nav.currentCodel), nav.getColor(nextCodel))
     if(!stopped) nav.currentCodel = nextCodel

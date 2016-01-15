@@ -3,6 +3,7 @@ package ui
 import java.awt.{BasicStroke, Color}
 
 import scala.swing._
+import utils.Point
 
 class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) extends Panel {
 
@@ -12,11 +13,11 @@ class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) e
   var nextX = 0
   var nextY = 0
 
-  def nextCodel(x:Int, y:Int) = {
+  def nextCodel(p:Point) = {
     currentX = nextX
     currentY = nextY
-    nextX = x
-    nextY = y
+    nextX = p.x
+    nextY = p.y
   }
 
   override def paintComponent(g : Graphics2D) {

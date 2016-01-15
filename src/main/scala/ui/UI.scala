@@ -9,16 +9,14 @@ class UI extends MainFrame {
 
   var codelsArray = ofDim[Int](4, 4)
   codelsArray(0) = Array(0, 1, 9, 0)
-  codelsArray(1) = Array(0, 2, 0, 10)
-  codelsArray(2) = Array(1, 0, 17, 3)
-  codelsArray(3) = Array(1, 1, 2, 5)
+  codelsArray(1) = Array(-1, 2, 0, 10)
+  codelsArray(2) = Array(-1, 0, 17, 3)
+  codelsArray(3) = Array(1, 1, -2, 5)
 
-  val inputField = new TextField { columns = 2 }
-  val program = new PietProgram(this)
+  val inputField = new TextField { columns = 1 }
   val codels = new Codels(4, 4, codelsArray)
-  var i = 0
+  val program = new PietProgram(this, codelsArray)
 
-  val l1 = new Label("bla %d".format(i))
   val labelDP = new Label("piet.DP: %s".format(program.nav.dp.name))
   val labelCC = new Label("piet.CC: %s".format(program.nav.cc.name))
   val labelCurrentCoords = new Label("COORDS: %s".format(program.nav.currentCodel))
@@ -28,11 +26,15 @@ class UI extends MainFrame {
 
   preferredSize = new Dimension(620, 500)
   title = "Piet"
+  codels.nextCodel(program.nav.next())
+
+
+
 
   def step() = {
     program.step()
 
-    codels.nextCodel(program.nav.next().x, program.nav.next().y)
+    codels.nextCodel(program.nav.next())
     codels.repaint()
     labelDP.text = "piet.DP: %s".format(program.nav.dp.name)
     labelCC.text = "piet.CC: %s".format(program.nav.cc.name)
@@ -74,7 +76,7 @@ class UI extends MainFrame {
 
 }
 
-object GuiProgramOne {
+object PietInterpreter {
   def main(args: Array[String]) {
     val ui = new UI
     ui.visible = true
