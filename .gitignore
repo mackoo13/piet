@@ -2,4 +2,5 @@
 
 target/
 
+#Nie jestem pewien czemu to poniższe nie działa :( może dlatego że .idea już było w repo...
 .idea/

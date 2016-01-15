@@ -19,6 +19,7 @@ class PietProgram(val ui:UI) {
     val lightnessChange = (to-from+33)%3
 
 //    println(hueChange + "*" + lightnessChange)
+//    @up testy sobie napisz a nie printować będzie :D
 
     (hueChange, lightnessChange) match {
       case (0, 0) => None     //nic
