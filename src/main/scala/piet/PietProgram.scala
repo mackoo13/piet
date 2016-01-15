@@ -1,3 +1,7 @@
+package piet
+
+import ui.UI
+
 import scala.Array._
 
 class PietProgram(val ui:UI) {
@@ -20,6 +24,7 @@ class PietProgram(val ui:UI) {
 
 //    println(hueChange + "*" + lightnessChange)
 //    @up testy sobie napisz a nie printować będzie :D
+    //komu by sie chcialo :p no wiem ze trzeba...
 
     (hueChange, lightnessChange) match {
       case (0, 0) => None     //nic
@@ -49,10 +54,7 @@ class PietProgram(val ui:UI) {
     println(nav.currentCodel + " to " + nextCodel)
 
     execOp(nav.getColor(nav.currentCodel), nav.getColor(nextCodel))
-    nav.currentCodel = nextCodel
-
-    println("STACK:" + stack)
-    println("INPUT:" + ui.inputField.text)
+    if(!stopped) nav.currentCodel = nextCodel
   }
 
 }

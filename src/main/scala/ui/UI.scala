@@ -1,6 +1,9 @@
+package ui
+
+import piet.PietProgram
+
+import scala.Array._
 import scala.swing._
-import javax.swing.ImageIcon
-import Array._
 
 class UI extends MainFrame {
 
@@ -13,12 +16,11 @@ class UI extends MainFrame {
   val inputField = new TextField { columns = 2 }
   val program = new PietProgram(this)
   val codels = new Codels(4, 4, codelsArray)
-//  for(j <- 0 to 2) program.step()
   var i = 0
 
   val l1 = new Label("bla %d".format(i))
-  val labelDP = new Label("DP: %s".format(program.nav.dp.name))
-  val labelCC = new Label("CC: %s".format(program.nav.cc.name))
+  val labelDP = new Label("piet.DP: %s".format(program.nav.dp.name))
+  val labelCC = new Label("piet.CC: %s".format(program.nav.cc.name))
   val labelCurrentCoords = new Label("COORDS: %s".format(program.nav.currentCodel))
   val labelNextCoords = new Label("NEXT: %s".format(program.nav.next()))
   val labelStack = new Label("<html>STACK:</html>")
@@ -30,10 +32,10 @@ class UI extends MainFrame {
   def step() = {
     program.step()
 
-    codels.updateCurrentCodel(program.nav.currentCodel.x, program.nav.currentCodel.y)
+    codels.nextCodel(program.nav.next().x, program.nav.next().y)
     codels.repaint()
-    labelDP.text = "DP: %s".format(program.nav.dp.name)
-    labelCC.text = "CC: %s".format(program.nav.cc.name)
+    labelDP.text = "piet.DP: %s".format(program.nav.dp.name)
+    labelCC.text = "piet.CC: %s".format(program.nav.cc.name)
     labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
     labelNextCoords.text = "NEXT: %s".format(program.nav.next())
     labelStack.text = "<html>STACK:<br>%s</html>".format(program.stack)

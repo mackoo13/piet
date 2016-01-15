@@ -1,3 +1,5 @@
+package piet
+
 import scala.collection.mutable
 
 class PietStack {
