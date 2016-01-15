@@ -4,7 +4,6 @@ import scala.swing._
 class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) extends Panel {
 
   preferredSize = new Dimension(300, 300)
-  var currentCodel:Rectangle = new Rectangle(0, 0, 0, 0)
   var componentSize = new Dimension(0, 0)
   var currentX = 0
   var currentY = 0
@@ -34,9 +33,12 @@ class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) e
       }
     }
 
-    currentCodel = new Rectangle(currentX*codelWidth, currentY*codelHeight, codelWidth, codelHeight)
+    val currentCodel = new Rectangle(currentX*codelWidth, currentY*codelHeight, codelWidth, codelHeight)
     g.setStroke(new BasicStroke(4))
-    g.setColor(Color.gray)
+    g.setColor(Color.white)
+    g.draw(currentCodel)
+    g.setStroke(new BasicStroke(2))
+    g.setColor(Color.black)
     g.draw(currentCodel)
   }
 }
