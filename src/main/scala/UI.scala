@@ -29,6 +29,9 @@ class UI extends MainFrame {
 
   def step() = {
     program.step()
+
+    codels.updateCurrentCodel(program.nav.currentCodel.x, program.nav.currentCodel.y)
+    codels.repaint()
     labelDP.text = "DP: %s".format(program.nav.dp.name)
     labelCC.text = "CC: %s".format(program.nav.cc.name)
     labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
@@ -61,22 +64,12 @@ class UI extends MainFrame {
     add(labelCurrentCoords, constraints(0, 3))
     add(labelNextCoords, constraints(0, 4))
     add(labelStack, constraints(0, 5, fill=GridBagPanel.Fill.Vertical))
-    add(codels, constraints(1, 0, gridheight=6, weightx = 1.0, weighty=1.0, fill=GridBagPanel.Fill.Both))
+    add(codels, constraints(1, 0, gridheight=6, weightx = 1.0, weighty=1.0))
     add(inputField,
       constraints(2, 0, weightx=1.0, fill=GridBagPanel.Fill.Horizontal))
     add(labelOut, constraints(2, 1, gridheight=5, fill=GridBagPanel.Fill.Vertical))
   }
 
-//  contents = new GridPanel(3, 2) {
-//    contents += new Label {
-//      icon = new ImageIcon("src/main/student.png")
-//    }
-//    contents += Button("A Button") {i+=1; l1.text = "ble %d".format(i)}
-//    contents += codels
-//    contents += l1
-//    contents += new CheckBox("Check me!")
-//    contents += Button("Close") { sys.exit(0) }
-//  }
 }
 
 object GuiProgramOne {

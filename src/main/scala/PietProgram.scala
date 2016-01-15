@@ -8,8 +8,6 @@ class PietProgram(val ui:UI) {
   codelsArray(2) = Array(1, 0, 0, 3)
   codelsArray(3) = Array(1, 1, 2, 5)
 
-  println(ui)
-
   val nav = new PietNavigator(codelsArray)
   val stack = new PietStack
   val out = new PietOutput
