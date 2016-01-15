@@ -15,7 +15,7 @@ class ImageLoader(imagePath: String, codelSize: Int) {
     throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
 
 
-  def getRGBArray(): Array[Array[Int]] = {
+  def getRGBArray: Array[Array[Int]] = {
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize
@@ -27,6 +27,8 @@ class ImageLoader(imagePath: String, codelSize: Int) {
 
     pixelArray
   }
+
+  def getPietColorsArray(rgbArray: Array[Array[Int]]):Array[Array[Int]] = rgbArray map (_ map rgbToPietCode)
 
   def rgbToPietCode(pixelColor: Int): Int = pixelColor match {
     // All colours as we know them prefixed by FF 'cause the pixed we get is coded on 4 bytes,
