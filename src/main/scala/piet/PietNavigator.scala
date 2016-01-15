@@ -1,4 +1,6 @@
-import Array._
+package piet
+
+import utils.Point
 
 class PietNavigator (val codelsArray:Array[Array[Int]]) {
 
@@ -63,7 +65,6 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
     var ix = if(dp1 == DPRIGHT || dp2 == DPRIGHT) 0 else width-1
     var iy = if(dp1 == DPDOWN || dp2 == DPDOWN) 0 else height-1
     while(!currentBlockArray(ix)(iy)) {
-//      println("check "+ix+" "+iy)
       ix += dp1.step.x
       iy += dp1.step.y
       if(ix < 0) { ix=width-1; iy+=dp2.step.y }
@@ -79,16 +80,8 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
     currentBlockArray.map(r => r.count(_ == true)).sum
   }
 
-//  x = 0
-//  y = 0
-//  buildBlockArray(new Point(x, y))
-//  println(currentBlockArray.deep.mkString("\n"))
-//  println(codelsArray.deep.mkString("\n"))
-//  println(blockArea(new Point(x, y)))
-//
-//  println(x, y, next())
-
 }
+
 
 
 sealed abstract class DP { val step:Point; val next:DP; val prev:DP; val name:String }
