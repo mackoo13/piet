@@ -2,6 +2,8 @@ package image
 
 import java.io.File
 import javax.imageio.ImageIO
+import piet.Colors
+
 import scala.Array._
 
 class ImageLoader(imagePath: String, codelSize: Int) {
@@ -47,8 +49,8 @@ class ImageLoader(imagePath: String, codelSize: Int) {
     case 0xFFFFC0FF => 15 // light magenta
     case 0xFFFF00FF => 16 // magenta
     case 0xFFC000C0 => 17 // dark magenta
-    case 0xFFFFFFFF => -1  // white
-    case 0xFF000000 => -2  // black
+    case 0xFFFFFFFF => Colors.WHITE  // white
+    case 0xFF000000 => Colors.BLACK  // black
     case _ => throw new IllegalStateException("Encountered unrecognizable color in the loaded image.")
   }
 }

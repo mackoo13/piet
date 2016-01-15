@@ -23,20 +23,20 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
   }
 
 //TODO -2 z braku lepszego pomyslu, raczej wywolanie dla nulla nie ma sensu
-  def getColor(p:Point):Int = if(p==null) -2 else if(p.x>=0 && p.y>=0 && p.x<width && p.y<height) codelsArray(p.x)(p.y) else -2
-
+  def getColor(p:Point):Int = if(p==null) -2 else if(p.x>=0 && p.y>=0 && p.x<width && p.y<height) codelsArray(p.x)(p.y) else Colors.BLACK
+                                        // ^ czy to -2 to też ma być BLACK?
   def next(): Point = {
     val i = 0
     var res:Point = null
     while(i<4 && res == null) {
-      if(getColor(lastInBlock(currentCodel)+dp.step) == -2) cc = cc.next
-      else res = lastInBlock(currentCodel)
+      if(getColor(lastInBlock(currentCodel)+dp.step) == Colors.BLACK) cc = cc.next
+      else res = lastInBlock(currentCodel)            // v czy to też ma być BLACK?
       if(getColor(lastInBlock(currentCodel)+dp.step) == -2 && res == null) dp = dp.next
       else if(res == null) res = lastInBlock(currentCodel)
     }
     if(res == null) return null     //TODO tu trzeba rzucic wyjatkiem moze, to znaczy ze koniec programu
-    do { res += dp.step } while(getColor(res) == -1)
-    if(getColor(res) == -2) return null
+    do { res += dp.step } while(getColor(res) == Colors.WHITE)
+    if(getColor(res) == Colors.BLACK) return null
     res
   }
 

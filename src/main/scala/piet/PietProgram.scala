@@ -16,6 +16,7 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
 //    println(hueChange + "*" + lightnessChange)
 //    @up testy sobie napisz a nie printować będzie :D
     //komu by sie chcialo :p no wiem ze trzeba...
+    //ja sobie tak właśnie wyłapałem bugi xD
 
     (hueChange, lightnessChange) match {
       case (0, 0) => None     //nic
