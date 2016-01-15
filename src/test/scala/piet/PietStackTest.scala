@@ -22,7 +22,7 @@ class PietStackTest extends FunSuite {
     assert(stack.stack.isEmpty)
   }
 
-  test("pushOnlyInt should push the char and convert it to integer") {
+  test("pushOnlyChar should push the char and convert it to integer") {
     val stack = new PietStack()
     stack.pushOnlyChar("1")
     assert(stack.stack.pop == 49)
@@ -47,4 +47,5 @@ class PietStackTest extends FunSuite {
     assert(stack.stack.isEmpty)
   }
 
+  test("")
 }
