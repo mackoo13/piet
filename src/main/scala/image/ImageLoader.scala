@@ -2,7 +2,6 @@ package image
 
 import java.io.File
 import javax.imageio.ImageIO
-
 import scala.Array._
 
 class ImageLoader(imagePath: String, codelSize: Int) {
@@ -14,40 +13,42 @@ class ImageLoader(imagePath: String, codelSize: Int) {
     throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
 
 
-  def rgbArray(): Array[Array[Int]] = {
+  def getRGBArray(): Array[Array[Int]] = {
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize
-    val pixelArray = ofDim[Int](outputWidth, outputHeight)
+    val pixelArray = ofDim[Int](outputHeight, outputWidth)
 
     for (i <- 0 until outputHeight)
       for (j <- 0 until outputWidth)
-        pixelArray(i)(j) = image.getRGB(i*codelSize, j*codelSize)
+        pixelArray(i)(j) = image.getRGB(j*codelSize, i*codelSize)
 
     pixelArray
   }
 
   def rgbToPietCode(pixelColor: Int): Int = pixelColor match {
-    case 0xFFC0C0 => 0  // light red
-    case 0xFF0000 => 1  // red
-    case 0xC00000 => 2  // dark red
-    case 0xFFFFC0 => 3  // light yellow
-    case 0xFFFF00 => 4  // yellow
-    case 0xC0C000 => 5  // dark yellow
-    case 0xC0FFC0 => 6  // light green
-    case 0x00FF00 => 7  // green
-    case 0x00C000 => 8  // dark green
-    case 0xC0FFFF => 9  // light cyan
-    case 0x00FFFF => 10 // cyan
-    case 0x00C0C0 => 11 // dark cyan
-    case 0xC0C0FF => 12 // light blue
-    case 0x0000FF => 13 // blue
-    case 0x0000C0 => 14 // dark blue
-    case 0xFFC0FF => 15 // light magenta
-    case 0xFF00FF => 16 // magenta
-    case 0xC000C0 => 17 // dark magenta
-    case 0xFFFFFF => -1  // white
-    case 0x000000 => -2  // black
+    // All colours as we know them prefixed by FF 'cause the pixed we get is coded on 4 bytes,
+    // First one meaning alpha and is FF
+    case 0xFFFFC0C0 => 0  // light red
+    case 0xFFFF0000 => 1  // red
+    case 0xFFC00000 => 2  // dark red
+    case 0xFFFFFFC0 => 3  // light yellow
+    case 0xFFFFFF00 => 4  // yellow
+    case 0xFFC0C000 => 5  // dark yellow
+    case 0xFFC0FFC0 => 6  // light green
+    case 0xFF00FF00 => 7  // green
+    case 0xFF00C000 => 8  // dark green
+    case 0xFFC0FFFF => 9  // light cyan
+    case 0xFF00FFFF => 10 // cyan
+    case 0xFF00C0C0 => 11 // dark cyan
+    case 0xFFC0C0FF => 12 // light blue
+    case 0xFF0000FF => 13 // blue
+    case 0xFF0000C0 => 14 // dark blue
+    case 0xFFFFC0FF => 15 // light magenta
+    case 0xFFFF00FF => 16 // magenta
+    case 0xFFC000C0 => 17 // dark magenta
+    case 0xFFFFFFFF => -1  // white
+    case 0xFF000000 => -2  // black
     case _ => throw new IllegalStateException("Encountered unrecognizable color in the loaded image.")
   }
 }
