@@ -1,3 +1,5 @@
 #Gitignore leci do repo żebyśmy sobie mogli wzajemnie updatować itp
 
 target/
+
+.idea/
