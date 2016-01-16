@@ -9,6 +9,13 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
   val out = new PietOutput
   var waiting = false
 
+  def reload(codelsArray: Array[Array[Int]]) = {
+    nav.reload(codelsArray)
+    stack.reload()
+    out.reload()
+    waiting = false
+  }
+
   def execOp(from:Int, to:Int) = {
     val hueChange = ((to/3)-(from/3)+66)%6
     val lightnessChange = (to-from+33)%3

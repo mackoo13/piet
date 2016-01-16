@@ -6,6 +6,8 @@ class PietOutput {
 
   var out = new ListBuffer[String]
 
+  def reload() = {out = new ListBuffer[String]}
+
   def charOut(c:AnyVal) = {
     try {
       out+=c.asInstanceOf[Int].toChar.toString

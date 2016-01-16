@@ -6,7 +6,7 @@ class PietStack {
 
   var stack = new mutable.Stack[Int]
 
-  def reload = { this.stack = new mutable.Stack[Int] }
+  def reload() = { this.stack = new mutable.Stack[Int] }
 
   def push(a:Int) = { stack.push(a) }
 

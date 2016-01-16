@@ -1,9 +1,13 @@
 package ui
 
-import image.ImageLoader
+import javax.swing.filechooser.FileNameExtensionFilter
+
+import image.{InvalidImageDimensionsException, ImageLoader}
 import piet.PietProgram
 
+import java.io.File
 import scala.Array._
+import scala.swing.FileChooser.Result
 import scala.swing._
 
 class UI extends MainFrame {
@@ -24,6 +28,7 @@ class UI extends MainFrame {
 
   val codels = new Codels(codelsArray)
   val program = new PietProgram(this, codelsArray)
+  val imageLoader = new ImageLoader
 
   val labelDP = new Label("DP: %s".format(program.nav.dp.name))
   val labelCC = new Label("CC: %s".format(program.nav.cc.name))
@@ -33,16 +38,31 @@ class UI extends MainFrame {
   val labelStack = new Label("<html>STACK:</html>")
   val labelOut = new Label("<html>OUT:</html>")
 
+  var startDir: File = new FileChooser().selectedFile
+
   preferredSize = new Dimension(620, 500)
   title = "Piet"
   codels.setNextCodel(program.nav.next())
 
-  def loadFile() = {
-    val chooser = new FileChooser
+  def codelSize = codelSizeField.text
+
+  def loadFile() = try {
+    val chooser = new FileChooser(startDir)
     chooser.title_=("Select image")
-    val filePath = chooser.selectedFile.toString
+    chooser.fileFilter_=(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "bmp", "gif", "png"))
+    val result: Result.Value = chooser.showDialog(codels, "Load")
+    if (result == Result.Approve) {
+      val filePath = chooser.selectedFile.toString
+      startDir = chooser.selectedFile.getParentFile
+      val codelsArray = imageLoader.reload(filePath, codelSize.toInt)
+      codels.reload(codelsArray)
+      program.reload(codelsArray)
 
-
+      codels.repaint()
+      codels.setNextCodel(program.nav.next())
+    }
+  } catch {
+    case _: InvalidImageDimensionsException => None      //TODO make a popup saying shit happens, add more cases
   }
 
   def step() = {
@@ -78,7 +98,7 @@ class UI extends MainFrame {
       c
     }
 
-    add(Button("Load file") {},constraints(0, 0))
+    add(Button("Load file") {loadFile()},constraints(0, 0))
     add(codelSizeField, constraints(0, 1))
     add(Button("step") {step()},constraints(0, 2))
     add(labelDP, constraints(0, 3))
