@@ -2,6 +2,8 @@ package ui
 
 import java.awt.{BasicStroke, Color}
 
+import piet.Colors
+
 import scala.swing._
 import utils.Point
 
@@ -72,8 +74,8 @@ class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) e
     case 15 => 0xFFC0FF // light magenta
     case 16 => 0xFF00FF // magenta
     case 17 => 0xC000C0 // dark magenta
-    case -1 => 0xFFFFFF  // white
-    case -2 => 0x000000  // black
+    case Colors.WHITE => 0xFFFFFF  // white
+    case Colors.BLACK => 0x000000  // black
     case _ => throw new IllegalStateException("Encountered unrecognizable color in the loaded image.")
   }
 }

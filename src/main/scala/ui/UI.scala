@@ -21,8 +21,8 @@ class UI extends MainFrame {
   val codels = new Codels(codelsArray.length, codelsArray(0).length, codelsArray)
   val program = new PietProgram(this, codelsArray)
 
-  val labelDP = new Label("piet.DP: %s".format(program.nav.dp.name))
-  val labelCC = new Label("piet.CC: %s".format(program.nav.cc.name))
+  val labelDP = new Label("DP: %s".format(program.nav.dp.name))
+  val labelCC = new Label("CC: %s".format(program.nav.cc.name))
   val labelCurrentCoords = new Label("COORDS: %s".format(program.nav.currentCodel))
   val labelNextCoords = new Label("NEXT: %s".format(program.nav.next()))
   val labelNextOp = new Label("OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next()))))
@@ -41,8 +41,8 @@ class UI extends MainFrame {
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
     codels.repaint()
-    labelDP.text = "piet.DP: %s".format(program.nav.dp.name)
-    labelCC.text = "piet.CC: %s".format(program.nav.cc.name)
+    labelDP.text = "DP: %s".format(program.nav.dp.name)
+    labelCC.text = "CC: %s".format(program.nav.cc.name)
     labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
     labelNextCoords.text = "NEXT: %s".format(program.nav.next())
     labelNextOp.text = "OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next())))
@@ -69,18 +69,18 @@ class UI extends MainFrame {
       c
     }
 
-    add(Button("step") {step()},
-      constraints(0, 0))
-    add(labelDP, constraints(0, 1))
-    add(labelCC, constraints(0, 2))
-    add(labelCurrentCoords, constraints(0, 3))
-    add(labelNextCoords, constraints(0, 4))
-    add(labelNextOp, constraints(0, 5))
-    add(labelStack, constraints(0, 6, fill=GridBagPanel.Fill.Vertical))
-    add(codels, constraints(1, 0, gridheight=7, weightx = 1.0, weighty=1.0))
+    add(Button("Load file") {},constraints(0, 0))
+    add(Button("step") {step()},constraints(0, 1))
+    add(labelDP, constraints(0, 2))
+    add(labelCC, constraints(0, 3))
+    add(labelCurrentCoords, constraints(0, 4))
+    add(labelNextCoords, constraints(0, 5))
+    add(labelNextOp, constraints(0, 6))
+    add(labelStack, constraints(0, 7, fill=GridBagPanel.Fill.Vertical))
+    add(codels, constraints(1, 0, gridheight=8, weightx = 1.0, weighty=1.0))
     add(inputField,
       constraints(2, 0, weightx=1.0, fill=GridBagPanel.Fill.Horizontal))
-    add(labelOut, constraints(2, 1, gridheight=6, fill=GridBagPanel.Fill.Vertical))
+    add(labelOut, constraints(2, 1, gridheight=7, fill=GridBagPanel.Fill.Vertical))
   }
 
 }
