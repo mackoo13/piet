@@ -212,11 +212,63 @@ class PietStackTest extends FunSuite {
 
   test("roll <depth> values up <n> times, where <n> is the first value popped, and <depth> is the second.") {
     val stack = new PietStack
-    stack.push(42)
-    stack.push(10)
-    stack.push(42)
-    stack.push(0)
+    stack.push(7)
+    stack.push(6)
+    stack.push(5)
+    stack.push(4)
+    stack.push(3)
+    stack.push(1)
+    stack.roll
+    assert(stack.stack.toList == 5::6::4::7::Nil)
+  }
+
+  test("roll with negative <n> parameter shold roll downwards") {
+    val stack = new PietStack
+    stack.push(7)
+    stack.push(6)
+    stack.push(5)
+    stack.push(4)
+    stack.push(3)
+    stack.push(-1)
+    stack.roll
+    assert(stack.stack.toList == 6::4::5::7::Nil)
+  }
+
+  test("roll with negative <depth> should be ignored") {
+    val stack = new PietStack
+    stack.push(7)
+    stack.push(6)
+    stack.push(5)
+    stack.push(4)
+    stack.push(-3)
+    stack.push(1)
+    stack.roll
+    assert(stack.stack.toList == 1::(-3)::4::5::6::7::Nil)
+  }
+
+  test("roll with <depth> greater than stack size should roll entire stack correctly") {
+    val stack = new PietStack
+    stack.push(7)
+    stack.push(6)
+    stack.push(5)
+    stack.push(4)
+    stack.push(33)
+    stack.push(1)
+    stack.roll
+    assert(stack.stack.toList == 5::6::7::4::Nil)
+  }
+
+  test("roll of an empty or one-element stack should be ignored") {
+    val stack = new PietStack
     stack.roll
     assert(stack.isEmpty)
+    stack.push(3)
+    stack.roll
+    assert(stack.length == 1)
+    assert(stack.pop == 3)
   }
+
+
+
+
 }

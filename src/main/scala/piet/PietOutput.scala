@@ -6,9 +6,21 @@ class PietOutput {
 
   var out = new ListBuffer[String]
 
-  def charOut(c:Int) = { out+=c.toChar.toString }
+  def charOut(c:AnyVal) = {
+    try {
+      out+=c.asInstanceOf[Int].toChar.toString
+    } catch {
+      case _: Throwable => None
+    }
+  }
 
-  def intOut(c:Int) = { out+=c.toString }
+  def intOut(c:AnyVal) = {
+    try {
+      out+=c.asInstanceOf[Int].toString
+    } catch {
+      case _: Throwable => None
+    }
+  }
 
   override def toString = out.addString(new StringBuilder(), "<br>").toString()
 

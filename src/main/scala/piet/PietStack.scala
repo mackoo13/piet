@@ -69,17 +69,27 @@ class PietStack {
 
   def roll = {
     if(stack.length>=2) {
-      val rolls = popOrZero
-      val depth = popOrZero
-      if (depth > 0 && depth <= stack.length) {
-        val tempStack = stack.clone()
-        for (i <- 0 until depth) pop
-        for (i <- depth - 1 to 0 by -1) {
-          push(tempStack.apply((i + rolls) % depth))
+      try {
+        val rolls = pop.asInstanceOf[Int]
+        try {
+          val depth = pop.asInstanceOf[Int] min stack.length
+          if (depth > 0) {
+            val tempStack = stack.clone()
+            for (i <- 0 until depth) pop
+            for (i <- depth-1 to 0 by -1) {
+              var j = (i + rolls) % depth
+              if(j<0) j+=depth
+              push(tempStack.apply(j))
+            }
+          } else {
+            push(depth)
+            push(rolls)
+          }
+        } catch {
+          case _: Throwable => push(rolls)
         }
-      } else {
-        push(depth)
-        push(rolls)
+      } catch {
+        case _: Throwable => None
       }
     }
   }

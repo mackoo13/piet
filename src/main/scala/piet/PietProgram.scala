@@ -30,8 +30,8 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
       case (4, 1) => stack.roll
       case (4, 2) => if(ui.inputField.text=="") waiting=true else { waiting=false; stack.pushOnlyInt(ui.inputField.text)}
       case (5, 0) => if(ui.inputField.text=="") waiting=true else { waiting=false; stack.pushOnlyChar(ui.inputField.text)}
-      case (5, 1) => None//out.intOut(stack.pop)
-      case (5, 2) => None //out.charOut(stack.pop)
+      case (5, 1) => out.intOut(stack.pop)
+      case (5, 2) => out.charOut(stack.pop)
     }
   }
 

@@ -9,13 +9,13 @@ class UI extends MainFrame {
 
   var codelsArray = ofDim[Int](8, 8)  //kolumny sa zamienione z wierszami, ale to nic zlego, bo to jest tylko do testowania
   codelsArray(0) = Array(0, -1, 13, 13, 0, 0, 0, 0)
-  codelsArray(1) = Array(0, 0, 0, 1, 0, 0, 0, 0)
-  codelsArray(2) = Array(0, 10, 10, 1, 0, 0, 10, 13)
-  codelsArray(3) = Array(1, 1, 1, 1, 0, 0, 10, 0)
-  codelsArray(4) = Array(1, 5, 4, 0, 0, 0, 10, 2)
-  codelsArray(5) = Array(2, 2, 2, 0, 0, 0, 10, 1)
-  codelsArray(6) = Array(2, 11, 7, 0, 0, 0, 1, 1)
-  codelsArray(7) = Array(0, 1, 1, 1, 2, 2, 0, 1)
+  codelsArray(1) = Array(14, 0, 0, 1, 0, 0, 0, 0)
+  codelsArray(2) = Array(-1, 10, 10, 1, 0, 0, 10, 13)
+  codelsArray(3) = Array(-1, 1, 1, 1, 0, 0, 10, 0)
+  codelsArray(4) = Array(0, 5, 4, 0, 0, 0, 10, 2)
+  codelsArray(5) = Array(15, 2, 2, 0, 0, 0, 10, 1)
+  codelsArray(6) = Array(-1, 11, 7, 0, 10, 0, 1, 1)
+  codelsArray(7) = Array(0, 0, 17, -1, 0, 16, 0, 1)
 
   val inputField = new TextField { columns = 1 }
   val codelSizeField = new TextField {columns = 2; text="1" }
