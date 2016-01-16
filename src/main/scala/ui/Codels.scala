@@ -7,13 +7,26 @@ import piet.Colors
 import scala.swing._
 import utils.Point
 
-class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) extends Panel {
+class Codels(val codelsArray:Array[Array[Int]]) extends Panel {
+
+  val width = codelsArray.length
+  val height = codelsArray(0).length
 
   preferredSize = new Dimension(300, 300)
   var currentX = 0
   var currentY = 0
   var nextX = 0
   var nextY = 0
+
+  def reload(codelsArray:Array[Array[Int]]) = {
+    val this.codelsArray = codelsArray
+    val this.width = codelsArray.length
+    val this.height = codelsArray(0).length
+    currentX = 0
+    currentY = 0
+    nextX = 0
+    nextY = 0
+  }
 
   def setNextCodel(p:Point) = {
     nextX = p.x

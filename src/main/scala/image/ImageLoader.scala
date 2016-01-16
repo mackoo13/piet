@@ -14,7 +14,7 @@ class ImageLoader(val imagePath: String, val codelSize: Int) {
   if(height % codelSize != 0 || width % codelSize != 0)
     throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
 
-  def reset(imagePath: String, codelSize: Int) = {
+  def reload(imagePath: String, codelSize: Int) = {
     val this.imagePath = imagePath
     val this.image = ImageIO.read(new File(imagePath))
     val this.width = image.getWidth
@@ -27,11 +27,11 @@ class ImageLoader(val imagePath: String, val codelSize: Int) {
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize
-    val pixelArray = ofDim[Int](outputHeight, outputWidth)
+    val pixelArray = ofDim[Int](outputWidth,outputHeight)
 
-    for (i <- 0 until outputHeight)
-      for (j <- 0 until outputWidth)
-        pixelArray(i)(j) = image.getRGB(j*codelSize, i*codelSize)
+    for (i <- 0 until outputWidth)
+      for (j <- 0 until outputHeight)
+        pixelArray(i)(j) = image.getRGB(i*codelSize, j*codelSize)
 
     pixelArray
   }

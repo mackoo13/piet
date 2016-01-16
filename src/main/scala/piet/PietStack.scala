@@ -4,9 +4,9 @@ import scala.collection.mutable
 
 class PietStack {
 
-  //TODO wyjateczki
-
   val stack = new mutable.Stack[Int]
+
+  def reload = { val this.stack = new mutable.Stack[Int] }
 
   def push(a:Int) = { stack.push(a) }
 

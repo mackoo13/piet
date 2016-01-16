@@ -21,7 +21,7 @@ class UI extends MainFrame {
   val codelSizeField = new TextField {columns = 2; text="1" }
   codelSizeField.horizontalAlignment_=(Alignment.Right)
 
-  val codels = new Codels(codelsArray.length, codelsArray(0).length, codelsArray)
+  val codels = new Codels(codelsArray)
   val program = new PietProgram(this, codelsArray)
 
   val labelDP = new Label("DP: %s".format(program.nav.dp.name))
