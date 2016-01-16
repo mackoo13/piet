@@ -10,6 +10,10 @@ class PietStack {
 
   def push(a:Int) = { stack.push(a) }
 
+  def isEmpty = stack.isEmpty
+
+  def length = stack.length
+
   def pushOnlyInt(input:String) = {
     try {
       push(input.toInt)
@@ -20,20 +24,42 @@ class PietStack {
 
   def pushOnlyChar(input:String) = { if(input.length == 1) push(input(0).toInt) }
 
-  def pop = { stack.pop() }
+  def pop = {
+    if(!isEmpty) stack.pop()
+  }
 
-  def add = { push(pop+pop) }
-
+  def add = { //Trochę na około ale po 1.5-2h prób wydaje się to akceptowalne
+    try {
+      val a = pop.asInstanceOf[Int]
+      try {
+        val b = pop.asInstanceOf[Int]
+        push(a+b)
+      } catch {
+        case _:Throwable => push(a)
+      }
+    } catch {
+      case _:Throwable => None
+    }
+  }
+/* Komentarze żeby kod się kompilował
   def sub = { push(-pop+pop) }
 
   def mul = { push(pop*pop) }
-
+*/
   def div = {
-    val a:Int = pop
-    val b:Int = pop
-    if(a != 0) b/a else {push(b); push(a)}
+    try {
+      val a = pop.asInstanceOf[Int]
+      try {
+        val b = pop.asInstanceOf[Int]
+        if(a!=0) push(b/a) else {push(b); push(a)}
+      } catch {
+        case _:Throwable => push(a)
+      }
+    } catch {
+      case _:Throwable => None
+    }
   }
-
+/*
   def mod = {
     val a:Int = pop
     val b:Int = pop
@@ -60,7 +86,7 @@ class PietStack {
       push(rolls)
     }
   }
-
+*/
   override def toString = stack.addString(new StringBuilder(), "<br>").toString()
 
 }
