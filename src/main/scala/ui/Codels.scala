@@ -18,6 +18,16 @@ class Codels(val codelsArray:Array[Array[Int]]) extends Panel {
   var nextX = 0
   var nextY = 0
 
+  def reload(codelsArray:Array[Array[Int]]) = {
+    val this.codelsArray = codelsArray
+    val this.width = codelsArray.length
+    val this.height = codelsArray(0).length
+    currentX = 0
+    currentY = 0
+    nextX = 0
+    nextY = 0
+  }
+
   def setNextCodel(p:Point) = {
     nextX = p.x
     nextY = p.y
