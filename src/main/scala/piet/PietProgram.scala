@@ -24,8 +24,8 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
       case (2, 1) => stack.mod
       case (2, 2) => stack.not
       case (3, 0) => stack.greater
-      case (3, 1) => nav.pointer(stack.popOrZero)
-      case (3, 2) => nav.switch(stack.popOrZero)
+      case (3, 1) => nav.pointer(stack.pop)
+      case (3, 2) => nav.switch(stack.pop)
       case (4, 0) => stack.dup
       case (4, 1) => stack.roll
       case (4, 2) => if(ui.inputField.text=="") waiting=true else { waiting=false; stack.pushOnlyInt(ui.inputField.text)}

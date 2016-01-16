@@ -16,12 +16,20 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
   var moveFailures = 0
   var noOp = false
 
-  def pointer(n:Int) = {
-    for(i <- 0 until n%4) dp = dp.next
+  def pointer(n:AnyVal) = {
+    try {
+      for(i <- 0 until n.asInstanceOf[Int]%4) dp = dp.next
+    } catch {
+      case _: Throwable => None
+    }
   }
 
-  def switch(n:Int) = {
-    if(n%2 == 1) cc = cc.next
+  def switch(n:AnyVal) = {
+    try {
+      if(n.asInstanceOf[Int]%2 == 1) cc = cc.next
+    } catch {
+      case _: Throwable => None
+    }
   }
 
 //BLACK dla nulla z braku lepszego pomyslu, raczej wywolanie dla nulla nie ma sensu

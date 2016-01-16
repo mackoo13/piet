@@ -6,7 +6,7 @@ class PietStack {
 
   //TODO wyjateczki
 
-  val stack = new mutable.Stack[Int]  //czy to może być val...?
+  val stack = new mutable.Stack[Int]
 
   def push(a:Int) = { stack.push(a) }
 
@@ -26,7 +26,7 @@ class PietStack {
 
   def pop = if(!isEmpty) stack.pop()
 
-  def popOrZero = if(!isEmpty) stack.pop() else 0
+  def popOrZero = if(!isEmpty) stack.pop() else 0 //ZUOOOOO
 
   def operation1(fun: Int => Unit) = {
     try {
@@ -66,9 +66,6 @@ class PietStack {
   def dup = { if(!isEmpty) push(stack.head) }
 
   def greater = operation2((a:Int, b:Int) => push(if(b>a) 1 else 0))
-
-  /* A tego to ja już nawet nie wiem... ale jest druga w nocy a ja wczoraj poszedłem spać o 6
-  więc prawdę mówiąc nie chciało mi się nawet patrzeć :D*/
 
   def roll = {
     if(stack.length>=2) {
