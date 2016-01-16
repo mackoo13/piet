@@ -6,7 +6,7 @@ class PietStack {
 
   //TODO wyjateczki
 
-  var stack = new mutable.Stack[Int]  //czy to może być val...?
+  val stack = new mutable.Stack[Int]  //czy to może być val...?
 
   def push(a:Int) = { stack.push(a) }
 
