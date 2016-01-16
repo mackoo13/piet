@@ -27,11 +27,11 @@ class ImageLoader(val imagePath: String, val codelSize: Int) {
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize
-    val pixelArray = ofDim[Int](outputHeight, outputWidth)
+    val pixelArray = ofDim[Int](outputWidth,outputHeight)
 
-    for (i <- 0 until outputHeight)
-      for (j <- 0 until outputWidth)
-        pixelArray(i)(j) = image.getRGB(j*codelSize, i*codelSize)
+    for (i <- 0 until outputWidth)
+      for (j <- 0 until outputHeight)
+        pixelArray(i)(j) = image.getRGB(i*codelSize, j*codelSize)
 
     pixelArray
   }
