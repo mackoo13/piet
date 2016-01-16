@@ -24,69 +24,63 @@ class PietStack {
 
   def pushOnlyChar(input:String) = { if(input.length == 1) push(input(0).toInt) }
 
-  def pop = {
-    if(!isEmpty) stack.pop()
+  def pop = if(!isEmpty) stack.pop()
+
+
+  def operation1(fun: Int => Unit) = {
+    try {
+      val a = pop.asInstanceOf[Int]
+      fun(a)
+    } catch {
+      case _: Throwable => None
+    }
   }
 
-  def add = { //Trochę na około ale po 1.5-2h prób wydaje się to akceptowalne
+  def operation2(fun: (Int, Int) => Unit) = {
     try {
       val a = pop.asInstanceOf[Int]
       try {
         val b = pop.asInstanceOf[Int]
-        push(a+b)
+        fun(a, b)
       } catch {
-        case _:Throwable => push(a)
+        case _: Throwable => push(a)
       }
     } catch {
-      case _:Throwable => None
+      case _: Throwable => None
     }
   }
-/* Komentarze żeby kod się kompilował
-  def sub = { push(-pop+pop) }
 
-  def mul = { push(pop*pop) }
-*/
-  def div = {
-    try {
-      val a = pop.asInstanceOf[Int]
-      try {
-        val b = pop.asInstanceOf[Int]
-        if(a!=0) push(b/a) else {push(b); push(a)}
-      } catch {
-        case _:Throwable => push(a)
+  def add = operation2((a:Int, b:Int)=> push(a+b))
+
+  def sub = operation2((a:Int, b:Int)=> push(b-a))
+
+  def mul = operation2((a:Int, b:Int)=> push(b*a))
+
+  def div = operation2((a:Int, b:Int)=> if(a!=0) push(b/a) else {push(b); push(a)})
+
+  def mod = operation2((a:Int, b:Int)=> if(a != 0) push(b%a) else {push(b); push(a)})
+
+  def not = operation1((a:Int) => push(if(a == 0) 1 else 0))
+
+  def dup = { if(!isEmpty) push(stack.head) }
+
+  def greater = operation2((a:Int, b:Int) => push(if(b>a) 1 else 0))
+  /* A tego to ja już nawet nie wiem... ale jest druga w nocy a ja wczoraj poszedłem spać o 6 więc prawdę mówiąc nie chciało mi się nawet patrzeć :D
+    def roll = {
+      val rolls = pop
+      val depth = pop
+      if(depth>0 && depth<=stack.length) {
+        val tempStack = stack.clone()
+        for(i <- 0 until depth) pop
+        for(i <- depth-1 to 0 by -1) {
+          push(tempStack.apply((i+rolls)%depth))
+        }
+      } else {
+        push(depth)
+        push(rolls)
       }
-    } catch {
-      case _:Throwable => None
     }
-  }
-/*
-  def mod = {
-    val a:Int = pop
-    val b:Int = pop
-    if(a != 0) push(b%a) else {push(b); push(a)}
-  }
-
-  def not = { push(if(pop == 0) 1 else 0) }
-
-  def dup = { push(stack.head) }
-
-  def greater = { if(pop<pop) 1 else 0 }
-
-  def roll = {
-    val rolls = pop
-    val depth = pop
-    if(depth>0 && depth<=stack.length) {
-      val tempStack = stack.clone()
-      for(i <- 0 until depth) pop
-      for(i <- depth-1 to 0 by -1) {
-        push(tempStack.apply((i+rolls)%depth))
-      }
-    } else {
-      push(depth)
-      push(rolls)
-    }
-  }
-*/
+  */
   override def toString = stack.addString(new StringBuilder(), "<br>").toString()
 
 }
