@@ -16,7 +16,13 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
   var moveFailures = 0
   var noOp = false
 
-  def pointer(n:AnyVal) = {
+  def reset(codelsArray: Array[Array[Int]]) = { //TODO finish, need to rearrange addressing
+    val this.codelsArray = codelsArray
+    val this.width = codelsArray.length
+    val this.height = codelsArray(0).length
+  }
+
+  def pointer(n: AnyVal) = {
     try {
       for(i <- 0 until n.asInstanceOf[Int]%4) dp = dp.next
     } catch {
@@ -24,7 +30,7 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
     }
   }
 
-  def switch(n:AnyVal) = {
+  def switch(n: AnyVal) = {
     try {
       if(n.asInstanceOf[Int]%2 == 1) cc = cc.next
     } catch {

@@ -18,6 +18,9 @@ class UI extends MainFrame {
   codelsArray(7) = Array(0, 1, 1, 1, 2, 2, 0, 1)
 
   val inputField = new TextField { columns = 1 }
+  val codelSizeField = new TextField {columns = 2; text="1" }
+  codelSizeField.horizontalAlignment_=(Alignment.Right)
+
   val codels = new Codels(codelsArray.length, codelsArray(0).length, codelsArray)
   val program = new PietProgram(this, codelsArray)
 
@@ -70,17 +73,18 @@ class UI extends MainFrame {
     }
 
     add(Button("Load file") {},constraints(0, 0))
-    add(Button("step") {step()},constraints(0, 1))
-    add(labelDP, constraints(0, 2))
-    add(labelCC, constraints(0, 3))
-    add(labelCurrentCoords, constraints(0, 4))
-    add(labelNextCoords, constraints(0, 5))
-    add(labelNextOp, constraints(0, 6))
-    add(labelStack, constraints(0, 7, fill=GridBagPanel.Fill.Vertical))
-    add(codels, constraints(1, 0, gridheight=8, weightx = 1.0, weighty=1.0))
+    add(codelSizeField, constraints(0, 1))
+    add(Button("step") {step()},constraints(0, 2))
+    add(labelDP, constraints(0, 3))
+    add(labelCC, constraints(0, 4))
+    add(labelCurrentCoords, constraints(0, 5))
+    add(labelNextCoords, constraints(0, 6))
+    add(labelNextOp, constraints(0, 7))
+    add(labelStack, constraints(0, 8, fill=GridBagPanel.Fill.Vertical))
+    add(codels, constraints(1, 0, gridheight=9, weightx = 1.0, weighty=1.0))
     add(inputField,
       constraints(2, 0, weightx=1.0, fill=GridBagPanel.Fill.Horizontal))
-    add(labelOut, constraints(2, 1, gridheight=7, fill=GridBagPanel.Fill.Vertical))
+    add(labelOut, constraints(2, 1, gridheight=8, fill=GridBagPanel.Fill.Vertical))
   }
 
 }
