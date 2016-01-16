@@ -20,6 +20,14 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
     val this.codelsArray = codelsArray
     val this.width = codelsArray.length
     val this.height = codelsArray(0).length
+    x = 0
+    y = 0
+    dp = DPRIGHT
+    cc = CCLEFT
+    currentCodel = new Point(0, 0)
+    currentBlockArray = Array.ofDim[Boolean](width, height)
+    moveFailures = 0
+    noOp = false
   }
 
   def pointer(n: AnyVal) = {
