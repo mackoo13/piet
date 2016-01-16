@@ -1,29 +1,29 @@
 package image
 
+import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import piet.Colors
 
 import scala.Array._
 
-class ImageLoader(val imagePath: String, val codelSize: Int) {
+class ImageLoader() {
 
-  val image = ImageIO.read(new File(imagePath))
-  val height = image.getHeight
-  val width = image.getWidth
-  if(height % codelSize != 0 || width % codelSize != 0)
-    throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
+
 
   def reload(imagePath: String, codelSize: Int) = {
-    val this.imagePath = imagePath
-    val this.image = ImageIO.read(new File(imagePath))
-    val this.width = image.getWidth
-    if(height % codelSize != 0 || width % codelSize != 0)
-      throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
+    val image = ImageIO.read(new File(imagePath))
+
+    getPietColorsArray(getRGBArray(image, codelSize))
   }
 
 
-  def getRGBArray: Array[Array[Int]] = {
+  def getRGBArray(image: BufferedImage, codelSize: Int): Array[Array[Int]] = {
+    val width = image.getWidth
+    val height = image.getHeight
+
+    if(height % codelSize != 0 || width % codelSize != 0)
+      throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize

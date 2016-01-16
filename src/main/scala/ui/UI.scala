@@ -1,5 +1,6 @@
 package ui
 
+import image.ImageLoader
 import piet.PietProgram
 
 import scala.Array._
@@ -18,7 +19,7 @@ class UI extends MainFrame {
   codelsArray(7) = Array(0, 0, 17, -1, 0, 16, 0, 1)
 
   val inputField = new TextField { columns = 1 }
-  val codelSizeField = new TextField {columns = 2; text="1" }
+  val codelSizeField = new TextField { columns = 2; text="1" }
   codelSizeField.horizontalAlignment_=(Alignment.Right)
 
   val codels = new Codels(codelsArray)
@@ -36,8 +37,13 @@ class UI extends MainFrame {
   title = "Piet"
   codels.setNextCodel(program.nav.next())
 
+  def loadFile() = {
+    val chooser = new FileChooser
+    chooser.title_=("Select image")
+    val filePath = chooser.selectedFile.toString
 
 
+  }
 
   def step() = {
 
