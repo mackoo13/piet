@@ -30,9 +30,10 @@ class ImageLoaderTest extends FunSuite with Matchers {
   test("getRGBArray should return a table of colors of appropriate size for given codel size."){
     val imgPath = getClass.getClassLoader.getResource("2x3.png").toURI.getPath
     val imgLoader = new ImageLoader(imgPath, 10)
-    val assertedResultTable = ofDim[Int](2,3)
-    assertedResultTable(0) = Array(0xFFFFFFFF, 0xFFFF00FF, 0xFFFF0000)
-    assertedResultTable(1) = Array(0xFF00FFFF, 0xFF0000FF, 0xFF000000)
+    val assertedResultTable = ofDim[Int](3,2)
+    assertedResultTable(0) = Array(0xFFFFFFFF, 0xFF00FFFF)
+    assertedResultTable(1) = Array(0xFFFF00FF, 0xFF0000FF)
+    assertedResultTable(2) = Array(0xFFFF0000, 0xFF000000)
 
     assertedResultTable should equal (imgLoader.getRGBArray)
   }
