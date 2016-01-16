@@ -2,10 +2,10 @@ package piet
 
 import utils.Point
 
-class PietNavigator (val codelsArray:Array[Array[Int]]) {
+class PietNavigator (var codelsArray:Array[Array[Int]]) {
 
-  val width = codelsArray.length
-  val height = codelsArray(0).length
+  def width = codelsArray.length
+  def height = codelsArray(0).length
 
   var x:Int = 0
   var y:Int = 0
@@ -17,9 +17,7 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
   var noOp = false
 
   def reload(codelsArray: Array[Array[Int]]) = {
-    val this.codelsArray = codelsArray
-    val this.width = codelsArray.length
-    val this.height = codelsArray(0).length
+    this.codelsArray = codelsArray
     x = 0
     y = 0
     dp = DPRIGHT
