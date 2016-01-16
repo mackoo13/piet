@@ -209,4 +209,14 @@ class PietStackTest extends FunSuite {
     assertResult(1)(stack.length)
     assertResult(0)(stack.pop)
   }
+
+  test("roll <depth> values up <n> times, where <n> is the first value popped, and <depth> is the second.") {
+    val stack = new PietStack
+    stack.push(42)
+    stack.push(10)
+    stack.push(42)
+    stack.push(0)
+    stack.roll
+    assert(stack.isEmpty)
+  }
 }

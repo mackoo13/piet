@@ -13,33 +13,33 @@ class Codels(val width:Int, val height:Int, val codelsArray:Array[Array[Int]]) e
   var nextX = 0
   var nextY = 0
 
-  def nextCodel(p:Point) = {
-    currentX = nextX
-    currentY = nextY
+  def setNextCodel(p:Point) = {
     nextX = p.x
     nextY = p.y
   }
+  
+  def setCurrentCodel(p:Point) = {
+    currentX = p.x
+    currentY = p.y
+  }
 
   override def paintComponent(g : Graphics2D) {
-    val codelWidth = size.width/width
-    val codelHeight = size.height/height
+    val wid = size.width/(width+1) min size.height/(height+1)
     
-    g.setColor(Color.white)
+    g.setColor(Color.black)
     g.fillRect(0,0, size.width, size.height)
-    
-    val wid = codelWidth min codelHeight
 
-    val x0 = (size.width - width * wid)/2
-    val y0 = (size.height - height * wid)/2
+    val x0 = (size.width - width*wid)/2
+    val y0 = (size.height - height*wid)/2
     for (x <- 0 until width) {
       for (y <- 0 until height) {
         g.setColor(new Color(PietCodeToRGB(codelsArray(x)(y))))
-        g.fillRect(x0 + x * wid, y0 + y * wid, wid, wid)
+        g.fillRect(x0+x*wid, y0+y*wid, wid, wid)
       }
     }
 
-    val currentCodel = new Rectangle(currentX*codelWidth, currentY*codelHeight, codelWidth, codelHeight)
-    val nextCodel = new Rectangle(nextX*codelWidth, nextY*codelHeight, codelWidth, codelHeight)
+    val currentCodel = new Rectangle(x0+currentX*wid, y0+currentY*wid, wid, wid)
+    val nextCodel = new Rectangle(x0+nextX*wid, y0+nextY*wid, wid, wid)
 
     g.setStroke(new BasicStroke(4))
     g.setColor(Color.white)

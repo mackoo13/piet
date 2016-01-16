@@ -26,6 +26,7 @@ class PietStack {
 
   def pop = if(!isEmpty) stack.pop()
 
+  def popOrZero = if(!isEmpty) stack.pop() else 0
 
   def operation1(fun: Int => Unit) = {
     try {
@@ -65,22 +66,27 @@ class PietStack {
   def dup = { if(!isEmpty) push(stack.head) }
 
   def greater = operation2((a:Int, b:Int) => push(if(b>a) 1 else 0))
-  /* A tego to ja już nawet nie wiem... ale jest druga w nocy a ja wczoraj poszedłem spać o 6 więc prawdę mówiąc nie chciało mi się nawet patrzeć :D
-    def roll = {
-      val rolls = pop
-      val depth = pop
-      if(depth>0 && depth<=stack.length) {
+
+  /* A tego to ja już nawet nie wiem... ale jest druga w nocy a ja wczoraj poszedłem spać o 6
+  więc prawdę mówiąc nie chciało mi się nawet patrzeć :D*/
+
+  def roll = {
+    if(stack.length>=2) {
+      val rolls = popOrZero
+      val depth = popOrZero
+      if (depth > 0 && depth <= stack.length) {
         val tempStack = stack.clone()
-        for(i <- 0 until depth) pop
-        for(i <- depth-1 to 0 by -1) {
-          push(tempStack.apply((i+rolls)%depth))
+        for (i <- 0 until depth) pop
+        for (i <- depth - 1 to 0 by -1) {
+          push(tempStack.apply((i + rolls) % depth))
         }
       } else {
         push(depth)
         push(rolls)
       }
     }
-  */
+  }
+
   override def toString = stack.addString(new StringBuilder(), "<br>").toString()
 
 }

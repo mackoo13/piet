@@ -13,6 +13,8 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
   var cc:CC = CCLEFT
   var currentCodel:Point = new Point(0, 0)
   var currentBlockArray: Array[Array[Boolean]] = Array.ofDim[Boolean](width, height)
+  var moveFailures = 0
+  var noOp = false
 
   def pointer(n:Int) = {
     for(i <- 0 until n%4) dp = dp.next
@@ -22,21 +24,21 @@ class PietNavigator (val codelsArray:Array[Array[Int]]) {
     if(n%2 == 1) cc = cc.next
   }
 
-//TODO -2 z braku lepszego pomyslu, raczej wywolanie dla nulla nie ma sensu
-  def getColor(p:Point):Int = if(p==null) -2 else if(p.x>=0 && p.y>=0 && p.x<width && p.y<height) codelsArray(p.x)(p.y) else Colors.BLACK
-                                        // ^ czy to -2 to też ma być BLACK?
+//BLACK dla nulla z braku lepszego pomyslu, raczej wywolanie dla nulla nie ma sensu
+  def getColor(p:Point):Int = if(p==null) Colors.BLACK else if(p.x>=0 && p.y>=0 && p.x<width && p.y<height) codelsArray(p.x)(p.y) else Colors.BLACK
+
+  def changeDirection() = {
+    if(moveFailures >= 8) println("koniec programu") //TODO
+    moveFailures += 1
+    if(moveFailures%2 == 1) cc = cc.next
+    else dp = dp.next
+  }
+
   def next(): Point = {
     val i = 0
-    var res:Point = null
-    while(i<4 && res == null) {
-      if(getColor(lastInBlock(currentCodel)+dp.step) == Colors.BLACK) cc = cc.next
-      else res = lastInBlock(currentCodel)            // v czy to też ma być BLACK?
-      if(getColor(lastInBlock(currentCodel)+dp.step) == -2 && res == null) dp = dp.next
-      else if(res == null) res = lastInBlock(currentCodel)
-    }
-    if(res == null) return null     //TODO tu trzeba rzucic wyjatkiem moze, to znaczy ze koniec programu
+    var res:Point = lastInBlock(currentCodel)
+    noOp = getColor(res + dp.step) == Colors.WHITE
     do { res += dp.step } while(getColor(res) == Colors.WHITE)
-    if(getColor(res) == Colors.BLACK) return null
     res
   }
 
