@@ -5,7 +5,7 @@ import javax.swing.filechooser.FileNameExtensionFilter
 import image.{InvalidImageDimensionsException, ImageLoader}
 import piet.PietProgram
 
-import java.io.File
+import java.io.{IOException, File}
 import scala.Array._
 import scala.swing.FileChooser.Result
 import scala.swing._
@@ -69,6 +69,7 @@ class UI extends MainFrame {
       labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
     }
   } catch {
+    case e: IOException => Dialog.showMessage(codels, "An error occured when trying to open the file.", title="Loading error")
     case e: InvalidImageDimensionsException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
     case e: IllegalStateException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
     case e: NumberFormatException => Dialog.showMessage(codels, "You must specify the codel size first!", title="Loading error")
