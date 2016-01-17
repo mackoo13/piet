@@ -58,8 +58,15 @@ class UI extends MainFrame {
       codels.reload(codelsArray)
       program.reload(codelsArray)
 
-      codels.repaint()
       codels.setNextCodel(program.nav.next())
+      codels.repaint()
+      labelDP.text = "DP: %s".format(program.nav.dp.name)
+      labelCC.text = "CC: %s".format(program.nav.cc.name)
+      labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
+      labelNextCoords.text = "NEXT: %s".format(program.nav.next())
+      labelNextOp.text = "OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next())))
+      labelStack.text = "<html>STACK:<br>%s</html>".format(program.stack)
+      labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
     }
   } catch {
     case e: InvalidImageDimensionsException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
