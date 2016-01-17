@@ -41,7 +41,7 @@ class UI extends MainFrame {
   var startDir: File = new FileChooser().selectedFile
 
   preferredSize = new Dimension(620, 500)
-  title = "Piet"
+  title = "Piet Interpreter"
   codels.setNextCodel(program.nav.next())
 
   def codelSize = codelSizeField.text
@@ -129,6 +129,7 @@ class UI extends MainFrame {
 object PietInterpreter {
   def main(args: Array[String]) {
     val ui = new UI
+    ui.centerOnScreen
     ui.visible = true
   }
 }
