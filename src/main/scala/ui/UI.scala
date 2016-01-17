@@ -76,6 +76,7 @@ class UI extends MainFrame {
   }
 
   def step() = {
+    program.step()
 
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
@@ -88,7 +89,6 @@ class UI extends MainFrame {
     labelStack.text = "<html>STACK:<br>%s</html>".format(program.stack)
     labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
 
-    program.step()
   }
 
     contents = new GridBagPanel {
