@@ -62,7 +62,10 @@ class UI extends MainFrame {
       codels.setNextCodel(program.nav.next())
     }
   } catch {
-    case _: InvalidImageDimensionsException => None      //TODO make a popup saying shit happens, add more cases
+    case e: InvalidImageDimensionsException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
+    case e: IllegalStateException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
+    case e: NumberFormatException => Dialog.showMessage(codels, "You must specify the codel size first!", title="Loading error")
+    case e: IllegalArgumentException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
   }
 
   def step() = {

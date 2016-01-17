@@ -12,8 +12,10 @@ class ImageLoader() {
 
 
   def reload(imagePath: String, codelSize: Int) = {
-    val image = ImageIO.read(new File(imagePath))
 
+    if(codelSize <= 0) throw new IllegalArgumentException("Codel size cannot be lower than 1!")
+
+    val image = ImageIO.read(new File(imagePath))
     getPietColorsArray(getRGBArray(image, codelSize))
   }
 
@@ -23,7 +25,7 @@ class ImageLoader() {
     val height = image.getHeight
 
     if(height % codelSize != 0 || width % codelSize != 0)
-      throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions")
+      throw new InvalidImageDimensionsException("Specified codel size doesn't fit image dimensions.")
 
     val outputWidth = width/codelSize
     val outputHeight = height/codelSize
