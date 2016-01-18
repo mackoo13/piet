@@ -12,18 +12,12 @@ import scala.swing._
 
 class UI extends MainFrame {
 
-  var codelsArray = ofDim[Int](8, 8)  //kolumny sa zamienione z wierszami, ale to nic zlego, bo to jest tylko do testowania
-  codelsArray(0) = Array(0, -1, 13, 13, 0, 0, 0, 0)
-  codelsArray(1) = Array(14, 0, 0, 1, 0, 0, 0, 0)
-  codelsArray(2) = Array(-1, 10, 10, 1, 0, 0, 10, 13)
-  codelsArray(3) = Array(-1, 1, 1, 1, 0, 0, 10, 0)
-  codelsArray(4) = Array(0, 5, 4, 0, 0, 0, 10, 2)
-  codelsArray(5) = Array(15, 2, 2, 0, 0, 0, 10, 1)
-  codelsArray(6) = Array(-1, 11, 7, 0, 10, 0, 1, 1)
-  codelsArray(7) = Array(0, 0, 17, -1, 0, 16, 0, 1)
+  var codelsArray = Array(Array(-2))
 
   val inputField = new TextField { columns = 1 }
+  val numberOfStepsField = new TextField { columns = 2; text="1" }
   val codelSizeField = new TextField { columns = 2; text="1" }
+  numberOfStepsField.horizontalAlignment_=(Alignment.Right)
   codelSizeField.horizontalAlignment_=(Alignment.Right)
 
   val codels = new Codels(codelsArray)
@@ -35,12 +29,13 @@ class UI extends MainFrame {
   val labelCurrentCoords = new Label("COORDS: %s".format(program.nav.currentCodel))
   val labelNextCoords = new Label("NEXT: %s".format(program.nav.next()))
   val labelNextOp = new Label("OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next()))))
-  val labelStack = new Label("<html>STACK:</html>")
+  val labelStack = new Label("<html>STACK:</html>") {minimumSize=new Dimension(100, 400)}
   val labelOut = new Label("<html>OUT:</html>")
 
   var startDir: File = new FileChooser().selectedFile
 
-  preferredSize = new Dimension(620, 500)
+  preferredSize = new Dimension(800, 500)
+  resizable = false
   title = "Piet Interpreter"
   codels.setNextCodel(program.nav.next())
 
@@ -92,6 +87,19 @@ class UI extends MainFrame {
 
   }
 
+  def multipleSteps(nText:String) = {
+    try {
+      val n = nText.toInt
+      if(n>0) {
+        for(i <- 0 until n) {
+          step()
+        }
+      }
+    } catch {
+      case _: Throwable => None
+    }
+  }
+
     contents = new GridBagPanel {
     def constraints(x: Int, y: Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
@@ -109,19 +117,22 @@ class UI extends MainFrame {
       c
     }
 
-    add(Button("Load file") {loadFile()},constraints(0, 0))
-    add(codelSizeField, constraints(0, 1))
-    add(Button("step") {step()},constraints(0, 2))
-    add(labelDP, constraints(0, 3))
-    add(labelCC, constraints(0, 4))
-    add(labelCurrentCoords, constraints(0, 5))
-    add(labelNextCoords, constraints(0, 6))
-    add(labelNextOp, constraints(0, 7))
-    add(labelStack, constraints(0, 8, fill=GridBagPanel.Fill.Vertical))
-    add(codels, constraints(1, 0, gridheight=9, weightx = 1.0, weighty=1.0))
+    add(Button("Load file") {loadFile()},constraints(0, 0, fill=GridBagPanel.Fill.Horizontal))
+    add(codelSizeField, constraints(0, 1, fill=GridBagPanel.Fill.Horizontal))
+    add(Button("Step") {step()},constraints(0, 2, fill=GridBagPanel.Fill.Horizontal))
+    add(Button("Multiple steps") {multipleSteps(numberOfStepsField.text)},constraints(0, 3, fill=GridBagPanel.Fill.Horizontal))
+    add(numberOfStepsField, constraints(0, 4, fill=GridBagPanel.Fill.Horizontal))
+    add(labelDP, constraints(0, 5))
+    add(labelCC, constraints(0, 6))
+    add(labelCurrentCoords, constraints(0, 7))
+    add(labelNextCoords, constraints(0, 8))
+    add(labelNextOp, constraints(0, 9))
     add(inputField,
-      constraints(2, 0, weightx=1.0, fill=GridBagPanel.Fill.Horizontal))
-    add(labelOut, constraints(2, 1, gridheight=8, fill=GridBagPanel.Fill.Vertical))
+        constraints(0, 10, fill=GridBagPanel.Fill.Horizontal))
+    add(new ScrollPane(labelOut), constraints(0, 11, fill=GridBagPanel.Fill.Both))
+    add(codels, constraints(1, 0, gridheight=12))
+    add(new ScrollPane(labelStack) {preferredSize=new Dimension(100, 400); maximumSize=new Dimension(100, 400); minimumSize=new Dimension(100, 400)},
+      constraints(2, 0, gridheight=12))
   }
 
 }
@@ -129,7 +140,7 @@ class UI extends MainFrame {
 object PietInterpreter {
   def main(args: Array[String]) {
     val ui = new UI
-    ui.centerOnScreen
+    ui.centerOnScreen()
     ui.visible = true
   }
 }

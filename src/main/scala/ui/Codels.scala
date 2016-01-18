@@ -12,7 +12,9 @@ class Codels(var codelsArray:Array[Array[Int]]) extends Panel {
   def width = codelsArray.length
   def height = codelsArray(0).length
 
-  preferredSize = new Dimension(300, 300)
+  preferredSize = new Dimension(400, 400)
+  minimumSize = new Dimension(400, 400)
+  maximumSize = new Dimension(400, 400)
   var currentX = 0
   var currentY = 0
   var nextX = 0
