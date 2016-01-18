@@ -5,6 +5,7 @@ import ui.UI
 class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
 
   val nav = new PietNavigator(codelsArray)
+  nav.listen(ui.programDone)
   val stack = new PietStack
   val out = new PietOutput
   var waiting = false

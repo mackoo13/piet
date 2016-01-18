@@ -3,7 +3,7 @@ package ui
 import javax.swing.filechooser.FileNameExtensionFilter
 
 import image.{InvalidImageDimensionsException, ImageLoader}
-import piet.PietProgram
+import piet.{FinishEvent, PietProgram}
 
 import java.io.{IOException, File}
 import scala.Array._
@@ -44,6 +44,12 @@ class UI extends MainFrame {
   title = "Piet Interpreter"
 
   def codelSize = codelSizeField.text
+
+  def programDone(ev: FinishEvent) = {
+      Dialog.showMessage(codels, ev.message, title="Info")
+      stepButton.enabled_=(false)
+      multistepButton.enabled_=(false)
+  }
 
   def loadFile() = try {
     val chooser = new FileChooser(startDir)
