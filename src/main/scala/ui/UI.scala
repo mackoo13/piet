@@ -120,6 +120,8 @@ class UI extends MainFrame {
     }
   }
 
+
+  //GUI LAYOUT
     contents = new GridBagPanel {
     def constraints(x: Int, y: Int,
                     gridwidth: Int = 1, gridheight: Int = 1,

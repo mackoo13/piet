@@ -26,8 +26,6 @@ class PietStack {
 
   def pop = if(!isEmpty) stack.pop()
 
-  def popOrZero = if(!isEmpty) stack.pop() else 0 //ZUOOOOO
-
   def operation1(fun: Int => Unit) = {
     try {
       val a = pop.asInstanceOf[Int]

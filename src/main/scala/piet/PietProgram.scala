@@ -21,7 +21,7 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
     val lightnessChange = (to-from+33)%3
 
     (hueChange, lightnessChange) match {
-      case (0, 0) => None     //nic
+      case (0, 0) => None
       case (0, 1) => stack.push(nav.blockArea(nav.currentCodel))
       case (0, 2) => stack.pop
       case (1, 0) => stack.add
