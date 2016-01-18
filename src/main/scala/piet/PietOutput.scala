@@ -24,6 +24,6 @@ class PietOutput {
     }
   }
 
-  override def toString = out.addString(new StringBuilder(), "<br>").toString()
+  override def toString = "<html><div style=\"width: 450px\">"+out.addString(new StringBuilder()).toString()+"</p></html>"
 
 }

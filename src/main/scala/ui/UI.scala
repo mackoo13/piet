@@ -30,16 +30,19 @@ class UI extends MainFrame {
   val labelNextCoords = new Label("NEXT: %s".format(program.nav.next()))
   val labelNextOp = new Label("OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next()))))
   val labelStack = new Label("<html>STACK:</html>") {minimumSize=new Dimension(100, 400)}
-  val labelOut = new Label("<html>OUT:</html>")
+  val labelOut = new Label("<html>OUT:</html>") {minimumSize=new Dimension(650, 100)}
+  labelStack.verticalAlignment_=(Alignment.Bottom)
+  labelOut.verticalAlignment_=(Alignment.Top)
 
   val stepButton = Button("Step") {step()}
   val multistepButton = Button("Multiple steps") {multipleSteps(numberOfStepsField.text)}
   stepButton.enabled_=(false)
   multistepButton.enabled_=(false)
 
+  var ended = false
   var startDir: File = new FileChooser().selectedFile
 
-  preferredSize = new Dimension(800, 500)
+  preferredSize = new Dimension(800, 600)
   resizable = false
   title = "Piet Interpreter"
 
@@ -59,16 +62,11 @@ class UI extends MainFrame {
 
       stepButton.enabled_=(true)
       multistepButton.enabled_=(true)
+      ended = false
 
       codels.setNextCodel(program.nav.next())
       codels.repaint()
-      labelDP.text = "DP: %s".format(program.nav.dp.name)
-      labelCC.text = "CC: %s".format(program.nav.cc.name)
-      labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
-      labelNextCoords.text = "NEXT: %s".format(program.nav.next())
-      labelNextOp.text = "OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next())))
-      labelStack.text = "<html>STACK:<br>%s</html>".format(program.stack)
-      labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
+      updateLabels
     }
   } catch {
     case e: IOException => Dialog.showMessage(codels, "An error occured when trying to open the file.", title="Loading error")
@@ -78,20 +76,28 @@ class UI extends MainFrame {
     case e: IllegalArgumentException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
   }
 
+  def endProgram = {
+    if(!ended) Dialog.showMessage(codels, "The program has ended.", title="Program info")
+    ended = true
+  }
+
+  def updateLabels = {
+    labelDP.text = "DP: %s".format(program.nav.dp.name)
+    labelCC.text = "CC: %s".format(program.nav.cc.name)
+    labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
+    labelNextCoords.text = "NEXT: %s".format(program.nav.next())
+    labelNextOp.text = "OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next())))
+    labelStack.text = "<html>%s<br><br>STACK</html>".format(program.stack)
+    labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
+  }
+
   def step() = {
     program.step()
 
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
     codels.repaint()
-    labelDP.text = "DP: %s".format(program.nav.dp.name)
-    labelCC.text = "CC: %s".format(program.nav.cc.name)
-    labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
-    labelNextCoords.text = "NEXT: %s".format(program.nav.next())
-    labelNextOp.text = "OP: %s".format(program.opName(program.nav.getColor(program.nav.currentCodel), program.nav.getColor(program.nav.next())))
-    labelStack.text = "<html>STACK:<br>%s</html>".format(program.stack)
-    labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
-
+    updateLabels
   }
 
   def multipleSteps(nText:String) = {
@@ -136,10 +142,11 @@ class UI extends MainFrame {
     add(labelNextOp, constraints(0, 9))
     add(inputField,
         constraints(0, 10, fill=GridBagPanel.Fill.Horizontal))
-    add(new ScrollPane(labelOut), constraints(0, 11, fill=GridBagPanel.Fill.Both))
-    add(codels, constraints(1, 0, gridheight=12))
-    add(new ScrollPane(labelStack) {preferredSize=new Dimension(100, 400); maximumSize=new Dimension(100, 400); minimumSize=new Dimension(100, 400)},
-      constraints(2, 0, gridheight=12))
+    add(codels, constraints(1, 0, gridheight=11))
+    add(new ScrollPane(labelStack) {val dim=new Dimension(100, 450); preferredSize=dim; maximumSize=dim; minimumSize=dim},
+      constraints(2, 0, gridheight=11))
+    add(new ScrollPane(labelOut) {val dim=new Dimension(650, 100); preferredSize=dim; maximumSize=dim; minimumSize=dim},
+      constraints(0, 11, gridwidth=3, fill=GridBagPanel.Fill.Both))
   }
 
 }

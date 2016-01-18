@@ -71,6 +71,7 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
 
   def step() = {
     val nextCodel = nav.next()
+    if(nav.moveFailures >= 8) ui.endProgram
     if(nav.getColor(nextCodel) == Colors.BLACK) nav.changeDirection()
     else nav.moveFailures = 0
     if(nav.moveFailures == 0 && !nav.noOp) execOp(nav.getColor(nav.currentCodel), nav.getColor(nextCodel))
