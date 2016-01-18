@@ -32,12 +32,16 @@ class UI extends MainFrame {
   val labelStack = new Label("<html>STACK:</html>") {minimumSize=new Dimension(100, 400)}
   val labelOut = new Label("<html>OUT:</html>")
 
+  val stepButton = Button("Step") {step()}
+  val multistepButton = Button("Multiple steps") {multipleSteps(numberOfStepsField.text)}
+  stepButton.enabled_=(false)
+  multistepButton.enabled_=(false)
+
   var startDir: File = new FileChooser().selectedFile
 
   preferredSize = new Dimension(800, 500)
   resizable = false
   title = "Piet Interpreter"
-  codels.setNextCodel(program.nav.next())
 
   def codelSize = codelSizeField.text
 
@@ -52,6 +56,9 @@ class UI extends MainFrame {
       val codelsArray = imageLoader.reload(filePath, codelSize.toInt)
       codels.reload(codelsArray)
       program.reload(codelsArray)
+
+      stepButton.enabled_=(true)
+      multistepButton.enabled_=(true)
 
       codels.setNextCodel(program.nav.next())
       codels.repaint()
@@ -119,8 +126,8 @@ class UI extends MainFrame {
 
     add(Button("Load file") {loadFile()},constraints(0, 0, fill=GridBagPanel.Fill.Horizontal))
     add(codelSizeField, constraints(0, 1, fill=GridBagPanel.Fill.Horizontal))
-    add(Button("Step") {step()},constraints(0, 2, fill=GridBagPanel.Fill.Horizontal))
-    add(Button("Multiple steps") {multipleSteps(numberOfStepsField.text)},constraints(0, 3, fill=GridBagPanel.Fill.Horizontal))
+    add(stepButton,constraints(0, 2, fill=GridBagPanel.Fill.Horizontal))
+    add(multistepButton,constraints(0, 3, fill=GridBagPanel.Fill.Horizontal))
     add(numberOfStepsField, constraints(0, 4, fill=GridBagPanel.Fill.Horizontal))
     add(labelDP, constraints(0, 5))
     add(labelCC, constraints(0, 6))
