@@ -39,7 +39,6 @@ class UI extends MainFrame {
   stepButton.enabled_=(false)
   multistepButton.enabled_=(false)
 
-  var ended = false
   var startDir: File = new FileChooser().selectedFile
 
   preferredSize = new Dimension(800, 600)
@@ -68,7 +67,6 @@ class UI extends MainFrame {
 
       stepButton.enabled_=(true)
       multistepButton.enabled_=(true)
-      ended = false
 
       codels.setNextCodel(program.nav.next())
       codels.repaint()
