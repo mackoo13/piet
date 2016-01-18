@@ -3,7 +3,7 @@ package ui
 import javax.swing.filechooser.FileNameExtensionFilter
 
 import image.{InvalidImageDimensionsException, ImageLoader}
-import piet.{FinishEvent, PietProgram}
+import piet.PietProgram
 
 import java.io.{IOException, File}
 import scala.Array._
@@ -12,7 +12,14 @@ import scala.swing._
 
 class UI extends MainFrame {
 
+
+  //FIELDS INITIALIZATION
   var codelsArray = Array(Array(-2))
+  var finished = false
+  val codels = new Codels(codelsArray)
+  val program = new PietProgram(this, codelsArray)
+  val imageLoader = new ImageLoader
+  var startDir: File = new FileChooser().selectedFile
 
   val inputField = new TextField { columns = 1 }
   val numberOfStepsField = new TextField { columns = 2; text="1" }
@@ -20,10 +27,14 @@ class UI extends MainFrame {
   numberOfStepsField.horizontalAlignment_=(Alignment.Right)
   codelSizeField.horizontalAlignment_=(Alignment.Right)
 
-  val codels = new Codels(codelsArray)
-  val program = new PietProgram(this, codelsArray)
-  val imageLoader = new ImageLoader
 
+  //GUI PROPERTIES
+  preferredSize = new Dimension(800, 600)
+  resizable = false
+  title = "Piet Interpreter"
+
+
+  //GUI COMPONENTS
   val labelDP = new Label("DP: %s".format(program.nav.dp.name))
   val labelCC = new Label("CC: %s".format(program.nav.cc.name))
   val labelCurrentCoords = new Label("COORDS: %s".format(program.nav.currentCodel))
@@ -34,23 +45,20 @@ class UI extends MainFrame {
   labelStack.verticalAlignment_=(Alignment.Bottom)
   labelOut.verticalAlignment_=(Alignment.Top)
 
-  val stepButton = Button("Step") {step()}
+  val stepButton = Button("Step") {step}
   val multistepButton = Button("Multiple steps") {multipleSteps(numberOfStepsField.text)}
   stepButton.enabled_=(false)
   multistepButton.enabled_=(false)
 
-  var startDir: File = new FileChooser().selectedFile
 
-  preferredSize = new Dimension(800, 600)
-  resizable = false
-  title = "Piet Interpreter"
 
   def codelSize = codelSizeField.text
 
-  def programDone(ev: FinishEvent) = {
-      Dialog.showMessage(codels, ev.message, title="Info")
-      stepButton.enabled_=(false)
-      multistepButton.enabled_=(false)
+  def endProgram() = {
+    if(!finished) Dialog.showMessage(codels, "Program finished.", title="Info")
+    stepButton.enabled_=(false)
+    multistepButton.enabled_=(false)
+    finished = true
   }
 
   def loadFile() = try {
@@ -72,6 +80,7 @@ class UI extends MainFrame {
       codels.repaint()
       updateLabels
     }
+    finished = false
   } catch {
     case e: IOException => Dialog.showMessage(codels, "An error occured when trying to open the file.", title="Loading error")
     case e: InvalidImageDimensionsException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
@@ -80,7 +89,7 @@ class UI extends MainFrame {
     case e: IllegalArgumentException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
   }
 
-  def updateLabels = {
+  def updateLabels() = {
     labelDP.text = "DP: %s".format(program.nav.dp.name)
     labelCC.text = "CC: %s".format(program.nav.cc.name)
     labelCurrentCoords.text = "COORDS: %s".format(program.nav.currentCodel)
@@ -90,9 +99,8 @@ class UI extends MainFrame {
     labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
   }
 
-  def step() = {
+  def step = {
     program.step()
-
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
     codels.repaint()
@@ -104,7 +112,7 @@ class UI extends MainFrame {
       val n = nText.toInt
       if(n>0) {
         for(i <- 0 until n) {
-          step()
+          step
         }
       }
     } catch {

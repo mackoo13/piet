@@ -17,14 +17,6 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
   var moveFailures = 0
   var noOp = false
 
-  var finished = false
-  var finishListeners: List[FinishEvent => Unit] = Nil
-
-  def listen(listener: FinishEvent => Unit) = finishListeners ::= listener
-
-  def finishNotify(ev: FinishEvent) = {
-    for (listener <- finishListeners) listener(ev)
-  }
 
   def reload(codelsArray: Array[Array[Int]]) = {
     this.codelsArray = codelsArray
@@ -36,7 +28,6 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
     currentBlockArray = Array.ofDim[Boolean](width, height)
     moveFailures = 0
     noOp = false
-    finished = false
   }
 
   def pointer(n: AnyVal) = {
@@ -59,7 +50,6 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
   def getColor(p: Point): Int = if (p == null) Colors.BLACK else if (p.x >= 0 && p.y >= 0 && p.x < width && p.y < height) codelsArray(p.x)(p.y) else Colors.BLACK
 
   def changeDirection() = {
-    if (moveFailures >= 8 && !finished) {finished = true; finishNotify(new FinishEvent("Program finished."))}
     moveFailures += 1
     if (moveFailures % 2 == 1) cc = cc.next
     else dp = dp.next
