@@ -93,7 +93,6 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
   }
 
   def lastInBlock(p:Point): Point = {
-    //TODO jak ArrayOutOfBounds, to wszystko false czyli zle
     buildBlockArray(p)
     val dp1 = if (cc == CCLEFT) dp.next else dp.prev
     val dp2 = dp.next.next
