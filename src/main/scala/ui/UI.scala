@@ -82,11 +82,6 @@ class UI extends MainFrame {
     case e: IllegalArgumentException => Dialog.showMessage(codels, e.getMessage, title="Loading error")
   }
 
-  def endProgram = {
-    if(!ended) Dialog.showMessage(codels, "The program has ended.", title="Program info")
-    ended = true
-  }
-
   def updateLabels = {
     labelDP.text = "DP: %s".format(program.nav.dp.name)
     labelCC.text = "CC: %s".format(program.nav.cc.name)

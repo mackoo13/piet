@@ -55,7 +55,7 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
     }
   }
 
-  //BLACK dla nulla z braku lepszego pomyslu, raczej wywolanie dla nulla nie ma sensu
+  //BLACK tylko dla formalnosci, takie wywolanie nie powinno miec miejsca
   def getColor(p: Point): Int = if (p == null) Colors.BLACK else if (p.x >= 0 && p.y >= 0 && p.x < width && p.y < height) codelsArray(p.x)(p.y) else Colors.BLACK
 
   def changeDirection() = {
