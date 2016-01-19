@@ -45,7 +45,7 @@ class UI extends MainFrame {
   labelStack.verticalAlignment_=(Alignment.Bottom)
   labelOut.verticalAlignment_=(Alignment.Top)
 
-  val stepButton = Button("Step") {step}
+  val stepButton = Button("Step") {step()}
   val multistepButton = Button("Multiple steps") {multipleSteps(numberOfStepsField.text)}
   stepButton.enabled_=(false)
   multistepButton.enabled_=(false)
@@ -99,7 +99,7 @@ class UI extends MainFrame {
     labelOut.text = "<html>OUT:<br>%s</html>".format(program.out)
   }
 
-  def step = {
+  def step():Unit = {
     program.programStep()
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
@@ -112,7 +112,7 @@ class UI extends MainFrame {
       val n = nText.toInt
       if(n>0) {
         for(i <- 0 until n) {
-          step
+          step()
         }
       }
     } catch {
