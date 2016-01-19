@@ -100,7 +100,7 @@ class UI extends MainFrame {
   }
 
   def step = {
-    program.step()
+    program.programStep()
     codels.setCurrentCodel(program.nav.lastInBlock(program.nav.currentCodel))
     codels.setNextCodel(program.nav.next())
     codels.repaint()

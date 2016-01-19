@@ -69,7 +69,7 @@ class PietProgram(val ui:UI, val codelsArray:Array[Array[Int]]) {
     }
   }
 
-  def step() = {
+  def programStep() = {
     val nextCodel = nav.next()
     if(nav.moveFailures >= 8) ui.endProgram
     if(nav.getColor(nextCodel) == Colors.BLACK) nav.changeDirection()
