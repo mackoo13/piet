@@ -52,15 +52,8 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
     else if (p.x >= 0 && p.y >= 0 && p.x < width && p.y < height) codelsArray(p.x)(p.y)
     else Colors.BLACK
 
-  def changeDirection() = {/*
-<<<<<<< HEAD
-//<<<<<<< HEAD
-//=======
-//    if (moveFailures >= 8 && !finished) {finished = true; finishNotify(new FinishEvent("Program Finished"))}
-//>>>>>>> parent of d6c0e0d... Updated end of program popup
-=======
-    if (moveFailures >= 8 && !finished) {finished = true; finishNotify(new FinishEvent("Program Finished"))}
->>>>>>> parent of d6c0e0d... Updated end of program popup*/
+
+  def changeDirection() = {
     moveFailures += 1
     if (moveFailures % 2 == 1) cc = cc.next
     else dp = dp.next
