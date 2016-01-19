@@ -52,6 +52,7 @@ class PietNavigator (var codelsArray:Array[Array[Int]]) {
     else if (p.x >= 0 && p.y >= 0 && p.x < width && p.y < height) codelsArray(p.x)(p.y)
     else Colors.BLACK
 
+
   def changeDirection() = {
     moveFailures += 1
     if (moveFailures % 2 == 1) cc = cc.next
